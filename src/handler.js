@@ -77,10 +77,11 @@ const saveBookHandler = (request, h) => {
   return response;
 };
 
-// menampilkan seluruh buku
+// menampilkan buku
 const getAllBooksHandler = (request) => {
   const { name, reading, finished } = request.query;
 
+  // menampilkan buku yang mengandung nama berdasarkan nilai yang diberikan pada query
   if (name) {
     return {
       status: 'success',
@@ -95,6 +96,7 @@ const getAllBooksHandler = (request) => {
     };
   }
 
+  // menampilkan buku yang sedang dibaca atau tidak sedang dibaca
   if (reading) {
     return {
       status: 'success',
@@ -109,6 +111,7 @@ const getAllBooksHandler = (request) => {
     };
   }
 
+  // menampilkan buku belum selesai dibaca atau sudah selesai dibaca
   if (finished !== undefined) {
     return {
       status: 'success',
@@ -123,6 +126,7 @@ const getAllBooksHandler = (request) => {
     };
   }
 
+  // menampilkan seluruh buku
   return {
     status: 'success',
     data: {
