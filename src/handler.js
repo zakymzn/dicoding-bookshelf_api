@@ -78,16 +78,62 @@ const saveBookHandler = (request, h) => {
 };
 
 // menampilkan seluruh buku
-const getAllBooksHandler = () => ({
-  status: 'success',
-  data: {
-    books: books.map((book) => ({
-      id: book.id,
-      name: book.name,
-      publisher: book.publisher,
-    })),
-  },
-});
+const getAllBooksHandler = (request) => {
+  const { name, reading, finished } = request.query;
+
+  if (name) {
+    return {
+      status: 'success',
+      data: {
+        books: books.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()))
+          .map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+      },
+    };
+  }
+
+  if (reading) {
+    return {
+      status: 'success',
+      data: {
+        books: books.filter((book) => book.reading === !reading)
+          .map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+      },
+    };
+  }
+
+  if (finished !== undefined) {
+    return {
+      status: 'success',
+      data: {
+        books: books.filter((book) => Number(book.finished) === Number(finished))
+          .map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+      },
+    };
+  }
+
+  return {
+    status: 'success',
+    data: {
+      books: books.map((book) => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+      })),
+    },
+  };
+};
 
 // menampilkan detail buku
 const getBookByIdHandler = (request, h) => {
