@@ -101,7 +101,7 @@ const getAllBooksHandler = (request) => {
     return {
       status: 'success',
       data: {
-        books: books.filter((book) => book.reading === !reading)
+        books: books.filter((book) => book.reading === Boolean(reading))
           .map((book) => ({
             id: book.id,
             name: book.name,
